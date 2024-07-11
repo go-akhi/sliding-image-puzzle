@@ -17,16 +17,31 @@ def makeBoard():
 def populateBoard(layout,G):
     layout=layout.split(" ")
     for x in range(len(layout)):
-        G.nodes[x+1]["pos"]=int(layout[x])
+        G.nodes[x+1]["val"]=int(layout[x])
 
 #Any given tile is movable iff one of its adjacent tiles is the node with 
 # the "pos" attribute set to 0. 
 
-def isTileMovable(G,tile):
-    zeroTile = (list(filter(lambda x :x[0] if x[1]['pos'] == 0 else False, G.nodes(data=True))))[0][0]
+def isTileMovable(tile,G):
+    zeroTile = (list(filter(lambda x :x[0] if x[1]['val'] == 0 else False, G.nodes(data=True))))[0][0]
     neighbour=[x for x in G.neighbors(zeroTile)]
     if tile in neighbour:
         return True
+    else:
+        return False
+
+# To move a tile, the "val" attribute  of the node only needs to change its place
+# with the zeroTile and the original location of the tile moved should then become zero.
+
+def moveOneTile(val,G):
+    movingTile = (list(filter(lambda x :x[0] if x[1]['val'] == val else False, G.nodes(data=True))))[0][0]
+    if (isTileMovable(movingTile,G)):
+        zeroTile = (list(filter(lambda x :x[0] if x[1]['val'] == 0 else False, G.nodes(data=True))))[0][0]
+        # need to find out the zewroTile everytime instead of caching it because obviously, it's moving
+        G.nodes[zeroTile]['val']=G.nodes[movingTile]['val']
+        G.nodes[movingTile]['val']=0
+        print(G.nodes(data=True))
+        return(G)
     else:
         return False
 
@@ -35,7 +50,8 @@ G = makeBoard()
 layout = str(input("Enter the puzzle layout in a single line, space delimited, LTR, 0 for empty tile : "))
 
 populateBoard(layout,G)
-print(isTileMovable(G,2))
+print(isTileMovable(2,G))
+moveOneTile(2,G)
 
 
 #nt = Network(directed=False)
