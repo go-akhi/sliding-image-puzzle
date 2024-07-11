@@ -1,6 +1,6 @@
 import networkx as nx
 #import matplotlib.pyplot as plt
-from pyvis.network import Network
+#from pyvis.network import Network
 
 #the pos attribute ranges from 1 to 9 and will be the corresponding 
 #node for the puzzle piece
@@ -17,15 +17,26 @@ def makeBoard():
 def populateBoard(layout,G):
     layout=layout.split(" ")
     for x in range(len(layout)):
-        G.nodes[x+1]["title"]=layout[x]
+        G.nodes[x+1]["pos"]=int(layout[x])
+
+#Any given tile is movable iff one of its adjacent tiles is the node with 
+# the "pos" attribute set to 0. 
+
+def isTileMovable(G,tile):
+    zeroTile = (list(filter(lambda x :x[0] if x[1]['pos'] == 0 else False, G.nodes(data=True))))[0][0]
+    neighbour=[x for x in G.neighbors(zeroTile)]
+    if tile in neighbour:
+        return True
+    else:
+        return False
 
 G = makeBoard()
 
 layout = str(input("Enter the puzzle layout in a single line, space delimited, LTR, 0 for empty tile : "))
 
 populateBoard(layout,G)
+print(isTileMovable(G,2))
 
-print(G.nodes(data=True))
 
 #nt = Network(directed=False)
 #nt.from_nx(G)
