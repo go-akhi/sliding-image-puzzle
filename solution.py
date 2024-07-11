@@ -14,20 +14,22 @@ def makeBoard():
         Gr=nx.relabel_nodes(Gr,mapping)
     return Gr
 
-G = makeBoard()
-
-layout = str(input("Enter the puzzle layout in a single line, space delimited, LTR, 0 for empty tile : "))
-
 def populateBoard(layout,G):
     layout=layout.split(" ")
     for x in range(len(layout)):
         G.nodes[x+1]["title"]=layout[x]
 
+G = makeBoard()
+
+layout = str(input("Enter the puzzle layout in a single line, space delimited, LTR, 0 for empty tile : "))
+
 populateBoard(layout,G)
 
-nt = Network(directed=False)
 print(G.nodes(data=True))
-nt.from_nx(G)
-nt.show("Puzzleboard.html",notebook=False)
+
+#nt = Network(directed=False)
+#nt.from_nx(G)
+#nt.show("Puzzleboard.html",notebook=False)
+
 #nx.draw(G,with_labels=True)
 #plt.show()
