@@ -17,4 +17,4 @@ There are a few more things to keep in mind,
 - Once the chains are formed, an approach for transporting the chain should be decided upon. if the top row is being filled in from the rightmost side, ie the "train" would be coming in from the right, the tile belonging to (1,1) should be at the head of the chain, if the train is coming in from the left, at the head of the train should be the tile belonging to (1,3). Similarly for the first column, at the head should be the tile belonging to (3,1) if filling in from the top and the tile belonging to (2,1) if filling in from the bottom. 
 
 ## Representation
-The puzzle can be represented in a number of ways. An 8 variable system, a list of lists or a numpy array had been considered but in order to represent the chain that needs to move together, a multigraph with different weights for the edges was picked to represent the puzzle board. 
+The puzzle can be represented in a number of ways. An 8 variable system, a list of lists or a numpy array had been considered but in order to represent the chain that needs to move together, a graph with different weights for the edges was picked to represent the puzzle board. 
